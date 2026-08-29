@@ -2,6 +2,8 @@
 
 **Track 7 — Data Analysis & Correlation** | FortyGuard Hackathon'26
 
+🔗 **Live demo:** https://fizaaslam1.github.io/Fortyguard-heat-health-regression/
+
 A regression toolkit that ingests FortyGuard's hyperlocal temperature data and correlates it with real-world, non-weather outcomes — in this case, heat-related emergency department (ED) visits — to quantify how strongly ambient heat drives health outcomes across the United States.
 
 ## The Problem
