@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotter Streets, Higher Risk — FortyGuard Hackathon'26</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0F14;
+    --surface:#131A22;
+    --surface-2:#1A222C;
+    --border:#1E2733;
+    --text:#EDEFF2;
+    --muted:#8B97A5;
+    --amber:#FFB020;
+    --red:#E4572E;
+    --teal:#2DD4BF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:0 24px;}
+
+  /* Hero */
+  header.hero{
+    padding:90px 0 60px;
+    border-bottom:1px solid var(--border);
+    background:
+      radial-gradient(600px 300px at 15% -10%, rgba(255,176,32,0.10), transparent 60%),
+      radial-gradient(600px 300px at 90% 0%, rgba(228,87,46,0.08), transparent 60%);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--amber);
+    margin-bottom:22px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(32px, 5.2vw, 54px);
+    line-height:1.12;
+    max-width:15ch;
+    letter-spacing:-0.01em;
+  }
+  .subtitle{
+    margin-top:20px;
+    max-width:56ch;
+    color:var(--muted);
+    font-size:17px;
+  }
+
+  .readout{
+    margin-top:44px;
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--surface);
+  }
+  .readout .cell{
+    padding:18px 16px;
+    border-right:1px solid var(--border);
+  }
+  .readout .cell:last-child{border-right:none;}
+  .readout .label{
+    font-size:11.5px;
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:8px;
+  }
+  .readout .value{
+    font-family:'JetBrains Mono', monospace;
+    font-size:22px;
+    font-weight:500;
+  }
+  .value.pos{color:var(--amber);}
+
+  @media (max-width: 640px){
+    .readout{grid-template-columns:repeat(2, 1fr);}
+    .readout .cell:nth-child(2){border-right:none;}
+  }
+
+  /* Sections */
+  section{padding:64px 0; border-bottom:1px solid var(--border);}
+  .kicker{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:28px;
+    margin-bottom:18px;
+    max-width:30ch;
+  }
+  p.lead{color:var(--muted); max-width:64ch; font-size:16px;}
+
+  /* Chart */
+  .chart-card{
+    margin-top:32px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:24px;
+  }
+  .chart-card svg{width:100%; height:auto; display:block;}
+  .dot{transition:r 0.15s ease;}
+  .dot:hover{r:10;}
+  .legend{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:18px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .gradient-bar{
+    height:8px;
+    width:160px;
+    border-radius:4px;
+    background:linear-gradient(90deg, var(--teal), var(--amber), var(--red));
+  }
+
+  /* Steps */
+  .steps{
+    margin-top:32px;
+    display:grid;
+    gap:1px;
+    background:var(--border);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+  }
+  .step{
+    background:var(--surface);
+    padding:22px 24px;
+    display:grid;
+    grid-template-columns:44px 1fr;
+    gap:16px;
+    align-items:start;
+  }
+  .step .num{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--amber);
+    font-size:14px;
+  }
+  .step h3{font-size:16px; font-weight:600; margin-bottom:6px;}
+  .step p{color:var(--muted); font-size:14.5px;}
+
+  /* Sources */
+  .sources{
+    margin-top:32px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media (max-width:640px){.sources{grid-template-columns:1fr;}}
+  .source-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:22px;
+  }
+  .source-card .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    margin-bottom:10px;
+  }
+  .source-card h3{font-size:16px; margin-bottom:8px;}
+  .source-card p{font-size:14px; color:var(--muted);}
+  .source-card a{color:var(--amber); text-decoration:none; font-size:13.5px;}
+  .source-card a:hover{text-decoration:underline;}
+
+  /* Impact */
+  .impact-grid{
+    margin-top:32px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  @media (max-width:720px){.impact-grid{grid-template-columns:1fr;}}
+  .impact-card{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+  }
+  .impact-card h3{font-size:15px; margin-bottom:8px; color:var(--text);}
+  .impact-card p{font-size:13.5px; color:var(--muted);}
+
+  footer{
+    padding:44px 0 70px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:16px;
+  }
+  footer .track{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+  footer a.repo-link{
+    color:var(--text);
+    text-decoration:none;
+    border:1px solid var(--border);
+    padding:10px 18px;
+    border-radius:8px;
+    font-size:14px;
+    transition:border-color 0.15s ease;
+  }
+  footer a.repo-link:hover{border-color:var(--amber);}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">FortyGuard Hackathon'26 — Track 7, Data Analysis &amp; Correlation</div>
+    <h1>Hotter streets send more people to the ER.</h1>
+    <p class="subtitle">A regression toolkit that pairs FortyGuard's hyperlocal 2-metre temperature data with real CDC heat-illness emergency visit rates — turning ambient heat into a measurable, statistically tested public-health signal for any U.S. location.</p>
+
+    <div class="readout">
+      <div class="cell">
+        <div class="label">Pearson r</div>
+        <div class="value pos">0.451</div>
+      </div>
+      <div class="cell">
+        <div class="label">p-value</div>
+        <div class="value">0.0461</div>
+      </div>
+      <div class="cell">
+        <div class="label">R²</div>
+        <div class="value">0.203</div>
+      </div>
+      <div class="cell">
+        <div class="label">Cities analyzed</div>
+        <div class="value">20</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">The relationship</div>
+    <h2>Temperature and heat-illness ED visits, 20 U.S. cities</h2>
+    <p class="lead">Each point is one city — colored by its own temperature, from cooler (teal) to hotter (red). The dashed line is the fitted regression (y = 13.17x − 183.55). Hover a point for the exact city and values.</p>
+    <div class="chart-card">
+<svg viewBox="0 0 860 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scatter plot of temperature versus heat-illness ER visit rate">
+  <line x1="60" y1="430.0" x2="830" y2="430.0" stroke="#1E2733" stroke-width="1"/><text x="50" y="434.0" fill="#8B97A5" font-size="12" text-anchor="end" font-family="JetBrains Mono, monospace">0</text><line x1="60" y1="356.3" x2="830" y2="356.3" stroke="#1E2733" stroke-width="1"/><text x="50" y="360.3" fill="#8B97A5" font-size="12" text-anchor="end" font-family="JetBrains Mono, monospace">100</text><line x1="60" y1="282.7" x2="830" y2="282.7" stroke="#1E2733" stroke-width="1"/><text x="50" y="286.7" fill="#8B97A5" font-size="12" text-anchor="end" font-family="JetBrains Mono, monospace">200</text><line x1="60" y1="209.0" x2="830" y2="209.0" stroke="#1E2733" stroke-width="1"/><text x="50" y="213.0" fill="#8B97A5" font-size="12" text-anchor="end" font-family="JetBrains Mono, monospace">300</text><line x1="60" y1="135.3" x2="830" y2="135.3" stroke="#1E2733" stroke-width="1"/><text x="50" y="139.3" fill="#8B97A5" font-size="12" text-anchor="end" font-family="JetBrains Mono, monospace">400</text><line x1="60" y1="61.7" x2="830" y2="61.7" stroke="#1E2733" stroke-width="1"/><text x="50" y="65.7" fill="#8B97A5" font-size="12" text-anchor="end" font-family="JetBrains Mono, monospace">500</text>
+  <line x1="174.4" y1="30" x2="174.4" y2="430" stroke="#1E2733" stroke-width="1"/><text x="174.4" y="452" fill="#8B97A5" font-size="12" text-anchor="middle" font-family="JetBrains Mono, monospace">22°C</text><line x1="295.4" y1="30" x2="295.4" y2="430" stroke="#1E2733" stroke-width="1"/><text x="295.4" y="452" fill="#8B97A5" font-size="12" text-anchor="middle" font-family="JetBrains Mono, monospace">26°C</text><line x1="416.4" y1="30" x2="416.4" y2="430" stroke="#1E2733" stroke-width="1"/><text x="416.4" y="452" fill="#8B97A5" font-size="12" text-anchor="middle" font-family="JetBrains Mono, monospace">30°C</text><line x1="537.4" y1="30" x2="537.4" y2="430" stroke="#1E2733" stroke-width="1"/><text x="537.4" y="452" fill="#8B97A5" font-size="12" text-anchor="middle" font-family="JetBrains Mono, monospace">34°C</text><line x1="658.5" y1="30" x2="658.5" y2="430" stroke="#1E2733" stroke-width="1"/><text x="658.5" y="452" fill="#8B97A5" font-size="12" text-anchor="middle" font-family="JetBrains Mono, monospace">38°C</text><line x1="779.5" y1="30" x2="779.5" y2="430" stroke="#1E2733" stroke-width="1"/><text x="779.5" y="452" fill="#8B97A5" font-size="12" text-anchor="middle" font-family="JetBrains Mono, monospace">42°C</text>
+  <line x1="60.0" y1="388.4" x2="830.0" y2="141.5" stroke="#EDEFF2" stroke-width="2" stroke-dasharray="6,5" opacity="0.85"/>
+  <circle cx="710.5" cy="210.5" r="7" fill="rgb(230,95,44)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Phoenix, AZ: 39.72°C, 298 ED visits/100k</title></circle><circle cx="525.0" cy="74.2" r="7" fill="rgb(247,151,35)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Houston, TX: 33.59°C, 483 ED visits/100k</title></circle><circle cx="454.5" cy="263.5" r="7" fill="rgb(254,173,32)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Miami, FL: 31.26°C, 226 ED visits/100k</title></circle><circle cx="739.2" cy="210.5" r="7" fill="rgb(228,87,46)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Las Vegas, NV: 40.67°C, 298 ED visits/100k</title></circle><circle cx="662.1" cy="74.2" r="7" fill="rgb(235,110,42)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Dallas, TX: 38.12°C, 483 ED visits/100k</title></circle><circle cx="578.9" cy="263.5" r="7" fill="rgb(242,135,38)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Atlanta, GA: 35.37°C, 226 ED visits/100k</title></circle><circle cx="507.2" cy="210.5" r="7" fill="rgb(249,157,34)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Los Angeles, CA: 33.0°C, 298 ED visits/100k</title></circle><circle cx="285.1" cy="210.5" r="7" fill="rgb(140,195,118)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>San Diego, CA: 25.66°C, 298 ED visits/100k</title></circle><circle cx="504.5" cy="392.4" r="7" fill="rgb(249,158,34)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>New York, NY: 32.91°C, 51 ED visits/100k</title></circle><circle cx="348.9" cy="354.9" r="7" fill="rgb(186,187,83)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Chicago, IL: 27.77°C, 102 ED visits/100k</title></circle><circle cx="150.8" cy="335.7" r="7" fill="rgb(45,212,191)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Seattle, WA: 21.22°C, 128 ED visits/100k</title></circle><circle cx="602.2" cy="336.4" r="7" fill="rgb(240,128,39)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Denver, CO: 36.14°C, 127 ED visits/100k</title></circle><circle cx="573.7" cy="379.2" r="7" fill="rgb(243,137,38)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Boston, MA: 35.2°C, 69 ED visits/100k</title></circle><circle cx="426.1" cy="354.9" r="7" fill="rgb(241,178,42)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Minneapolis, MN: 30.32°C, 102 ED visits/100k</title></circle><circle cx="321.7" cy="335.7" r="7" fill="rgb(167,191,98)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Portland, OR: 26.87°C, 128 ED visits/100k</title></circle><circle cx="560.1" cy="210.5" r="7" fill="rgb(244,141,37)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Sacramento, CA: 34.75°C, 298 ED visits/100k</title></circle><circle cx="617.6" cy="74.2" r="7" fill="rgb(239,123,40)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Austin, TX: 36.65°C, 483 ED visits/100k</title></circle><circle cx="603.4" cy="74.2" r="7" fill="rgb(240,128,39)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>San Antonio, TX: 36.18°C, 483 ED visits/100k</title></circle><circle cx="631.5" cy="210.5" r="7" fill="rgb(237,119,40)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Tucson, AZ: 37.11°C, 298 ED visits/100k</title></circle><circle cx="530.5" cy="263.5" r="7" fill="rgb(247,150,36)" stroke="#0B0F14" stroke-width="1.5" class="dot"><title>Orlando, FL: 33.77°C, 226 ED visits/100k</title></circle>
+  <text x="445.0" y="472" fill="#8B97A5" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">Ambient temperature (°C), FortyGuard API</text>
+  <text x="14" y="230.0" fill="#8B97A5" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" transform="rotate(-90, 14, 230.0)">Heat-illness ED visits / 100k (CDC)</text>
+</svg>
+      <div class="legend">
+        <span>Cooler</span>
+        <div class="gradient-bar"></div>
+        <span>Hotter</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">How it works</div>
+    <h2>Three steps, two real data sources</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div>
+          <h3>Pull hyperlocal temperature</h3>
+          <p>For each U.S. location, call the FortyGuard Temperature API (<code>/v1/heatmap</code>) and poll until the 2-metre ambient temperature is ready.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div>
+          <h3>Merge in a real outcome</h3>
+          <p>Join that temperature to a real-world, non-weather outcome — here, CDC heat-illness ED visit rates by HHS region.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div>
+          <h3>Test the relationship</h3>
+          <p>Run a Pearson correlation and linear regression to quantify the strength and significance of the link — not just eyeball a trend.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">Data sources</div>
+    <h2>Two real, published datasets — no synthetic numbers in the final result</h2>
+    <div class="sources">
+      <div class="source-card">
+        <div class="tag">Temperature</div>
+        <h3>FortyGuard Temperature API</h3>
+        <p>2-metre ambient air temperature, 15 July 2024, 14:00 local (peak-heat hour), for 20 U.S. cities.</p>
+      </div>
+      <div class="source-card">
+        <div class="tag">Health outcome</div>
+        <h3>CDC — MMWR 2024;73:324–329</h3>
+        <p>"Heat-Related Emergency Department Visits — United States, May–September 2023." Rate per 100,000 all-cause ED visits, by HHS region.</p>
+        <a href="https://www.cdc.gov/mmwr/volumes/73/wr/mm7315a1.htm" target="_blank" rel="noopener">Read the source report →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="border-bottom:none;">
+  <div class="wrap">
+    <div class="kicker">Who this is for</div>
+    <h2>A first, low-cost signal for people who plan around heat</h2>
+    <div class="impact-grid">
+      <div class="impact-card">
+        <h3>City health departments</h3>
+        <p>Screen which locations warrant closer monitoring before committing budget to cooling centers or outreach.</p>
+      </div>
+      <div class="impact-card">
+        <h3>Emergency preparedness teams</h3>
+        <p>Get an early, statistically grounded read on heat-health risk without waiting on a full epidemiological study.</p>
+      </div>
+      <div class="impact-card">
+        <h3>Researchers &amp; planners</h3>
+        <p>Swap in any outcome CSV — energy load, transit ridership, crime — and get the same rigor for a different question.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; width:100%;">
+    <div class="track">Built for FortyGuard Hackathon'26 · Track 7 — Data Analysis &amp; Correlation</div>
+    <a class="repo-link" href="https://github.com/FizaAslam1/Fortyguard-heat-health-regression" target="_blank" rel="noopener">View source on GitHub →</a>
+  </div>
+</footer>
+
+</body>
+</html>
