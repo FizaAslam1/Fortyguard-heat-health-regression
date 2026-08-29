@@ -1,0 +1,4 @@
+Pearson correlation (r): 0.451
+p-value: 0.0461
+R-squared: 0.203
+Equation: y = 13.171 * x + -183.553
